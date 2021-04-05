@@ -7578,6 +7578,10 @@ static int get_start_cpu(struct task_struct *p)
 		start_cpu = rd->max_cap_orig_cpu;
 
 	return start_cpu;
+	if(!sched_feat(STUNE_BOOST_BIAS_BIG))
+		return rd->min_cap_orig_cpu;
+
+	return boosted ? rd->max_cap_orig_cpu : rd->min_cap_orig_cpu;
 }
 
 enum fastpaths {
